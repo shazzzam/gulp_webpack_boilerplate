@@ -1,5 +1,7 @@
 @import 'normalize.css/normalize';
 
-@import './blocks/footer.scss';
-
 @import './layout/variables.scss';
+@import './layout/mixins.scss';
+@import './layout/base.scss';
+
+@import './blocks/footer.scss';
