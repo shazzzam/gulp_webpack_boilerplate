@@ -33,8 +33,9 @@ const paths = {
     src: './src/assets/styles/**/*.scss',
     dest: './dist/assets/css'
   },
-  scripts: {
-    src: {
+  js: {
+    src: './strc/assets/scripts/**/*.js',
+    scripts: {
       main: './src/assets/scripts/main.js',
       app: './src/assets/scripts/app.js'
     },
@@ -162,10 +163,10 @@ function fonts() {
 }
 
 function js() {
-  return gulp.src(paths.scripts.src.main)
+  return gulp.src(paths.js.scripts.main)
         .pipe(webpackStream({
           mode: 'none',
-          entry: paths.scripts.src,
+          entry: paths.js.scripts,
           output: {
             filename: '[name].min.js'
           },
@@ -179,7 +180,7 @@ function js() {
             ]
           }
         }))
-        .pipe(gulp.dest(paths.scripts.dest))
+        .pipe(gulp.dest(paths.js.dest))
         .on('end', browserSync.reload);
 }
 
@@ -190,6 +191,10 @@ function clean() {
 function watch() {
   gulp.watch(paths.templates.src, templates);
   gulp.watch(paths.styles.src, styles);
+  gulp.watch(paths.fonts.src, fonts);
+  gulp.watch(paths.images.src, images);
+  gulp.watch(paths.svg.src, svg);
+  gulp.watch(paths.js.src, js);
 }
 
 function serve() {
@@ -198,6 +203,7 @@ function serve() {
       baseDir: paths.root
     },
     port: 8080,
+    open: false
   });
 }
 
