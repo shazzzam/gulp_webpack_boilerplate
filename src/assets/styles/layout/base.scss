@@ -1,0 +1,48 @@
+html,
+body {
+  font-family: $oswald;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 $mobile-pads;
+  min-width: $mobile-width;
+  box-sizing: border-box;
+
+  @include tablet {
+    padding: 0 $tablet-pads;
+  }
+
+  @include desktop {
+    padding: 0 $desktop-pads;
+    max-width: $desktop-width;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
