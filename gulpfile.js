@@ -34,7 +34,7 @@ const paths = {
     dest: './dist/assets/css'
   },
   js: {
-    src: './strc/assets/scripts/**/*.js',
+    src: './src/assets/scripts/**/*.js',
     scripts: {
       main: './src/assets/scripts/main.js',
       app: './src/assets/scripts/app.js'
@@ -47,7 +47,7 @@ const paths = {
   },
   svg: {
     src: './src/assets/svg/**/*.svg',
-    dest: './dist/assets/svg'
+    dest: './src/assets/svgsprite'
   },
   fonts: {
     src: './src/assets/fonts/**/*.*',
@@ -55,7 +55,7 @@ const paths = {
   }
 };
 
-function templates() {
+const templates = () => {
   return gulp.src(paths.templates.pages)
         .pipe(pug({ pretty: true }))
         .on('error', notify.onError({
@@ -65,7 +65,7 @@ function templates() {
         .on('end', browserSync.reload);
 }
 
-function styles() {
+const styles = () => {
   return gulp.src(paths.styles.main)
         .pipe(sourceMaps.init())
         .pipe(plumber())
@@ -85,7 +85,7 @@ function styles() {
         .pipe(browserSync.stream());
 }
 
-function stylesProd() {
+const stylesProd = () => {
   return gulp.src(paths.styles.main)
         .pipe(sass({
           includePaths: ['node_modules/']
@@ -98,13 +98,13 @@ function stylesProd() {
         .pipe(gulp.dest(paths.styles.dest));
 }
 
-function images() {
+const images = () => {
   return gulp.src(paths.images.src)
         .pipe(gulp.dest(paths.images.dest))
         .pipe(browserSync.stream());
 }
 
-function imagesProd() {
+const imagesProd = () => {
   return gulp.src(paths.images.src)
         .pipe(cache(imagemin([
           imagemin.gifsicle({ interlaced: true }),
@@ -129,7 +129,7 @@ function imagesProd() {
         .pipe(gulp.dest(paths.images.dest));
 }
 
-function svg() {
+const svg = () => {
   return gulp.src(paths.svg.src)
         .pipe(svgmin({
           js2svg: {
@@ -156,13 +156,13 @@ function svg() {
         .pipe(browserSync.stream());
 }
 
-function fonts() {
+const fonts = () => {
   return gulp.src(paths.fonts.src)
         .pipe(gulp.dest(paths.fonts.dest))
         .pipe(browserSync.stream());
 }
 
-function js() {
+const js = () => {
   return gulp.src(paths.js.scripts.main)
         .pipe(webpackStream({
           mode: 'none',
@@ -184,11 +184,9 @@ function js() {
         .on('end', browserSync.reload);
 }
 
-function clean() {
-  return del(paths.root);
-}
+const clean = () => del(paths.root)
 
-function watch() {
+const watch = () => {
   gulp.watch(paths.templates.src, templates);
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.fonts.src, fonts);
@@ -197,7 +195,7 @@ function watch() {
   gulp.watch(paths.js.src, js);
 }
 
-function serve() {
+const serve = () => {
   browserSync.init({
     server: {
       baseDir: paths.root
@@ -229,6 +227,7 @@ gulp.task('default', gulp.series(
     fonts,
     js
   ),
+  templates,
   gulp.parallel(watch, serve)
 ));
 
@@ -241,5 +240,6 @@ gulp.task('build', gulp.series(
     svg,
     fonts,
     js
-  )
+  ),
+  templates
 ));
