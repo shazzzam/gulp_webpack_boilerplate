@@ -188,6 +188,7 @@ const clean = () => del(paths.root)
 
 const watch = () => {
   gulp.watch(paths.templates.src, templates);
+  gulp.watch(paths.svg.dest + '/**/*.svg', templates);
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.fonts.src, fonts);
   gulp.watch(paths.images.src, images);
